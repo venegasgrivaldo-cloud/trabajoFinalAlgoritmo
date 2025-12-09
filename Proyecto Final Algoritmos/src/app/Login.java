@@ -3,6 +3,7 @@ package app;
 
 import java.awt.Menu;
 import javax.swing.JOptionPane;
+import utils.AuthUtil;
 
 public class Login extends javax.swing.JPanel {
 
@@ -56,25 +57,24 @@ public class Login extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(143, 143, 143)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(122, 122, 122)
+                        .addGap(45, 45, 45)
                         .addComponent(jLabel1))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(Contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(77, 77, 77)
-                                .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(149, 149, 149)
+                                .addGap(72, 72, 72)
                                 .addComponent(Ingresar)))))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(98, 98, 98)
                 .addComponent(jLabel1)
                 .addGap(28, 28, 28)
                 .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -82,23 +82,24 @@ public class Login extends javax.swing.JPanel {
                 .addComponent(Contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
                 .addComponent(Ingresar)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarActionPerformed
      
+        
                                     
     // Credenciales esperadas
-    String usuarioEsperado = "admin";
+        String usuarioEsperado = "admin";
         String contrasenaEsperada = "12345";
 
     // Obtener valores ingresados
-   String u = Usuario.getText().trim();
-String p = Contraseña.getText().trim();
+    String u = Usuario.getText().trim();
+    String p = Contraseña.getText().trim();
 
 
-   if (u.equals(usuarioEsperado) && p.equals(contrasenaEsperada)) {
+   if (AuthUtil.validarUsuario(u, p)) {
 
             // Obtener JFrame padre
             java.awt.Container top = this.getTopLevelAncestor();

@@ -30,6 +30,7 @@ public class FormBusquedas extends JPanel {
         btnBuscar = new JButton("Buscar");
         btnOrdenarEdad = new JButton("Ordenar por Edad");
         btnExportar = new JButton("Exportar CSV");
+      
 
         arriba.add(btnCargar);
         arriba.add(new JLabel("Campo:"));
@@ -39,6 +40,7 @@ public class FormBusquedas extends JPanel {
         arriba.add(btnBuscar);
         arriba.add(btnOrdenarEdad);
         arriba.add(btnExportar);
+       
 
         add(arriba, BorderLayout.NORTH);
 

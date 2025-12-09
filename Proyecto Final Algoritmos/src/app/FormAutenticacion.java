@@ -23,7 +23,7 @@ public class FormAutenticacion extends JPanel {
         setLayout(new BorderLayout());
         content = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(6,6,6,6);
+        c.insets = new Insets(7,7,7,7);
         c.fill = GridBagConstraints.HORIZONTAL;
 
         tfNombre = new JTextField(20);
@@ -69,7 +69,7 @@ public class FormAutenticacion extends JPanel {
         boolean ok = AuthUtil.registrarUsuario(usuario, contrasena);
         if (ok) {
             JOptionPane.showMessageDialog(this, "Usuario registrado correctamente.");
-            // opcional: volver al login
+            
             java.awt.Container top = this.getTopLevelAncestor();
             if (top instanceof GUIPrincipal gui) {
                 gui.mostrarPanel(new Login());

@@ -16,7 +16,7 @@ public class CSVReader {
             br.readLine(); // saltar cabecera
 
             while ((linea = br.readLine()) != null) {
-                String[] data = linea.split(";");
+                String[] data = linea.split(",");
 
                 PruebaMolecular p = new PruebaMolecular(
                         data[0], // uuid

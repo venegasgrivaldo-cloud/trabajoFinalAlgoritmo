@@ -4,13 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import io.CSVReader;
 import model.PruebaMolecular;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 import structures.ListaEnlazada;
 import structures.Nodo;
 import utils.DataStore;
 
 /**
- * FormEstadisticas corregido: genera totales por departamento
- * sin usar colecciones de Java; usa listas enlazadas propias.
+ * FormEstadisticas corregido: genera totales por departamento sin usar
+ * colecciones de Java; usa listas enlazadas propias.
  */
 public class FormEstadisticas extends JPanel {
 
@@ -48,8 +51,8 @@ public class FormEstadisticas extends JPanel {
     }
 
     /**
-     * Genera la estadística: Totales por Departamento
-     * usando solo estructuras propias (ListaEnlazada).
+     * Genera la estadística: Totales por Departamento usando solo estructuras
+     * propias (ListaEnlazada).
      */
     private void generar() {
         if (datos == null || datos.tamaño() == 0) {
@@ -59,10 +62,16 @@ public class FormEstadisticas extends JPanel {
 
         // Nodo para acumulación (lista simple de pares)
         class NodoPar {
+
             String departamento;
             int contador;
             NodoPar siguiente;
-            NodoPar(String d) { departamento = (d == null ? "DESCONOCIDO" : d); contador = 1; siguiente = null; }
+
+            NodoPar(String d) {
+                departamento = (d == null ? "DESCONOCIDO" : d);
+                contador = 1;
+                siguiente = null;
+            }
         }
 
         NodoPar head = null;
@@ -71,7 +80,9 @@ public class FormEstadisticas extends JPanel {
         Nodo<PruebaMolecular> aux = datos.getCabeza();
         while (aux != null) {
             String dpto = aux.dato.getDepartamento();
-            if (dpto == null || dpto.trim().isEmpty()) dpto = "DESCONOCIDO";
+            if (dpto == null || dpto.trim().isEmpty()) {
+                dpto = "DESCONOCIDO";
+            }
 
             // buscar en la lista de pares
             NodoPar t = head;
@@ -95,7 +106,10 @@ public class FormEstadisticas extends JPanel {
         // contar número de filas
         int filas = 0;
         NodoPar tmp = head;
-        while (tmp != null) { filas++; tmp = tmp.siguiente; }
+        while (tmp != null) {
+            filas++;
+            tmp = tmp.siguiente;
+        }
 
         // preparar matriz para JTable
         String[][] m = new String[filas][2];
@@ -108,10 +122,31 @@ public class FormEstadisticas extends JPanel {
             i++;
         }
 
+        //Usando jfreechard
+        DefaultPieDataset datosTabla = new DefaultPieDataset();
+
+        tmp = head;
+        while (tmp != null) {
+            datosTabla.setValue(tmp.departamento, tmp.contador);
+            tmp = tmp.siguiente;
+        }
+        JFreeChart chart = org.jfree.chart.ChartFactory.createPieChart(
+                "Distribución de Pruebas por Departamento", // título
+                datosTabla, // dataset
+                true, // leyenda
+                true, // tooltips
+                false // URLs
+        );
+
+        ChartPanel panelGrafico = new ChartPanel(chart);
+        panelGrafico.setPreferredSize(new Dimension(400, 300));
+        JOptionPane.showMessageDialog(this, panelGrafico, "Gráfico", JOptionPane.PLAIN_MESSAGE);
+
         // mostrar (sin ordenar): si quieres ordenarlo, podemos aplicar un ordenamiento sobre la matriz
         tabla.setModel(new javax.swing.table.DefaultTableModel(
                 m,
                 new String[]{"Departamento", "Total Pruebas"}
         ));
+
     }
 }
